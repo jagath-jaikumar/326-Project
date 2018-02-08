@@ -3,9 +3,13 @@
 ## Contributors
 
 Adam Rivelli
+
 Ali Grace
+
 Jagath Jai Kumar
+
 Jeremy Kelleher
+
 Sagar Arora
 
 
