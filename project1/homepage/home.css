@@ -151,6 +151,23 @@ https://github.com/samrayner/bootstrap-side-navbar
     width: 100%;
 }
 
+.class_btn {
+    width: 100%;
+    text-align:left;
+}
+
+#class_select {
+    width:80%;
+}
+
+#post_button {
+    width:20%;
+}
+
+#new_post {
+    resize:none;
+}
+
 .no-margin {
     margin: 0px;
 }
