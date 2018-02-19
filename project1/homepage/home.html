@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<tml lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../favicon.ico">
+
+  <title>CS 326 Home Page</title>
+
+  <!-- Bootstrap core -->
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles -->
+  <link href="home.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="navbar navbar-inverse bg-inverse">
+    <div class="container d-flex justify-content-between">
+      <a href="#" class="navbar-brand">Home</a>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="navbar navbar-default navbar-fixed-side">
+      <div class="row no-margin">
+        <form class="navbar-search">
+          <input type="text" class="search-query full" placeholder="Add Classes">
+        </form>
+      </div>
+      <div class="row">
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <a data-toggle="collapse" href="#current_class_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample" class="panel-title">
+                <p class="panel-title">
+                  Current Classes
+                </p>
+              </a>
+            </div>
+            <div id="current_class_dropdown" class="collapse in">
+              <ul class="list-group">
+                <li class="list-group-item"><button class="btn class_btn">CS 187</button></li>
+                <li class="list-group-item"><button class="btn class_btn">MA 132</button></li>
+                <li class="list-group-item"><button class="btn class_btn">PH 152</button></li>
+                <li class="list-group-item"><button class="btn class_btn">CH 112</button></li>
+                <li class="list-group-item"><button class="btn class_btn">AR 101</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <a data-toggle="collapse" href="#past_class_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample" class="panel-title">
+                <p class="panel-title">
+                  Previous Classes
+                </p>
+              </a>
+            </div>
+            <div id="past_class_dropdown" class="collapse in">
+              <ul class="list-group">
+                <li class="list-group-item"><button class="btn class_btn">CS 121</button></li>
+                <li class="list-group-item"><button class="btn class_btn">MA 131</button></li>
+                <li class="list-group-item"><button class="btn class_btn">PH 151</button></li>
+                <li class="list-group-item"><button class="btn class_btn">CH 111</button></li>
+                <li class="list-group-item"><button class="btn class_btn">CW 100</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-md-6">
+
+    <div class="form-group border border-dark">
+      <label for="PostArea">New Post</label>
+      <textarea class="form-control" id="new_post" rows="3" placeholder="Write a new post..."></textarea>
+      <div class="input-group">
+        <div class="input-group-btn">
+          <select class="form-control" id="class_select">
+            <option>CS 187</option>
+            <option>MA 132</option>
+            <option>PH 152</option>
+            <option>CH 112</option>
+            <option>AR 101</option>
+          </select>
+          <button type="button" class="btn btn-primary" id="post_button">Post!</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Bobby J</h3>
+      </div>
+      <div class="panel-body">
+        Gee whiz, what a great lecture! Tim Richards delivering a classic once again!
+      </div>
+      <div class="panel-footer">
+        CS 187
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Casey Wako</h3>
+      </div>
+      <div class="panel-body">
+        Darn I'm bored, I can't wait until I get to CS 230 with your boy T.Rich later!
+      </div>
+      <div class="panel-footer">
+        MA 132
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">You</h3>
+      </div>
+      <div class="panel-body">
+        Drew a picture of my favorite professor in Art today!
+      </div>
+      <div class="panel-footer">
+        AR 101
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Lynn Jenner</h3>
+      </div>
+      <div class="panel-body">
+        Physics makes no sense, anyone want to study for the exam later?
+      </div>
+      <div class="panel-footer">
+        PH 152
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-3">
+  <div class="navbar navbar-default navbar-fixed-side">
+    <div class="row no-margin">
+      <form class="navbar-search">
+        <input type="text" class="search-query full" placeholder="Search Contacts">
+      </form>
+    </div>
+    <div class="row">
+      <div class="panel-group">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <p class="panel-title">
+              <a data-toggle="collapse" href="#recent_contacts_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample">Recently Contacted</a>
+            </p>
+          </div>
+          <div id="recent_contacts_dropdown" class="collapse in">
+            <ul class="list-group">
+              <a><li class="list-group-item"><span class="badge">4</span>Bobby J</li></a>
+              <a><li class="list-group-item"><span class="badge">1</span>Daniel Tyson</li></a>
+              <a><li class="list-group-item"><span class="badge"></span>John Stephen</li></a>
+              <a><li class="list-group-item"><span class="badge">5</span>Wally O.</li></a>
+              <a><li class="list-group-item"><span class="badge">29</span>Lynn Jenner</li></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="panel-group">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <p class="panel-title">
+              <a data-toggle="collapse" href="#classmates_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample">Other Classmates</a>
+            </p>
+          </div>
+          <div id="classmates_dropdown" class="collapse in">
+            <ul class="list-group">
+              <a><li class="list-group-item">Casey Wako</li></a>
+              <a><li class="list-group-item">Geoff Sesh</li></a>
+              <a><li class="list-group-item">Danni T.</li></a>
+              <a><li class="list-group-item">Orrin H.</li></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="text-muted">
+    <div class="container">
+      <p>WIP: Work-in-Progress</p>
+    </div>
+  </footer>
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+    crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../js/vendor/jquery-1.11.2"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+    crossorigin="anonymous"></script>
+    <script src="../js/vendor/holder.min.js"></script>
+    <script>
+      $(function () {
+        Holder.addTheme("thumb", { background: "#55595c", foreground: "#eceeef", text: "Thumbnail" });
+      });
+    </script>
+    <script src="../js/vendor/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <script src="../js/ie10-viewport-bug-workaround.js"></script> -->
+  </body>
+
+  </html>
