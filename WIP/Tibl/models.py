@@ -3,26 +3,28 @@ from django.db import models
 # Create your models here.
 
 class Course(models.Model):
-	department = models.CharField(max_length=200)
+	department = models.ForeignKey('Department', on_delete=models.SET_NULL, null=True)
+	name = models.CharField(max_length=200, null=True)
 	number = models.CharField(max_length=10)
 
 class Section(models.Model):
 	year = models.IntegerField()
-	season = (
+	season_enum = (
 		('F', 'Fall'),
-		('Su', 'Spring'),
+		('Sp', 'Spring'),
 		('W', 'Winter'),
 		('Su', 'Summer'),
 	)
-	teacher = models.ForeignKey('Teacher', on_delete=models.SET_NULL, null=True)
-	student = models.ForeignKey('Student', on_delete=models.SET_NULL, null=True)
-	post = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True)
+	season = models.CharField(max_length=2, choices=season_enum, null=True)
+	teachers = models.ManyToManyField('Teacher')
+	students = models.ManyToManyField('Student')
+	course = models.ForeignKey('Course', on_delete=models.SET_NULL, null=True)
 
 class Post(models.Model):
 	poster = models.ForeignKey('Student', on_delete=models.SET_NULL, null=True)
-	course = models.ForeignKey('Course', on_delete=models.SET_NULL, null=True)
 	content = models.TextField(max_length=10000)
 	creation_date = models.DateTimeField(auto_now_add=True)
+	section = models.ForeignKey('Section', on_delete=models.SET_NULL, null=True)
 
 
 class Student(models.Model):
