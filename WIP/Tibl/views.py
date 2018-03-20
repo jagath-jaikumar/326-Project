@@ -11,9 +11,17 @@ def index(request):
     )
 
 def classpage(request):
+    course_name = Section.course.name
+    course_number = Section.course.number
+    year = Section.year
+    season = Section.season
+    teachers = Section.teachers
+    students = Section.students
+
     return render(
         request,
         'classpage.html',
+        context={'name':course_name,'number':course_number,'year':year,'season':season, 'teachers':teachers, 'students':students},
     )
 
 def messaging(request):
