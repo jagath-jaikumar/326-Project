@@ -2,18 +2,20 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from .models import Course, Section, Post, Student, Teacher, Department
+from .models import Course, Section, Post, Student, Teacher, Department, Message 
 
 def index(request, pk):
-    past_course_list = Section.objects.filter(student=pk).course.name
-    course_list = Section.objects.filter(student=pk).filter(season='Sp').filter(year=2018).course.name
-    have_messaged = Message.objects.filter(sender=pk).receiver | Message.objects.filter(receiver=pk).sender
+    past_course_list = Section.objects.filter(students=pk)
+    course_list = Section.objects.filter(students=pk).filter(season='Sp').filter(year=2018)
+    have_messaged = [message.receiver for message in Message.objects.filter(sender=pk)] +\
+                    [message.sender for message in Message.objects.filter(receiver=pk)]
+    
 
     return render(
         request,
         'index.html',
         context={
-        'past_course_list': pastcourse_list,
+        'past_course_list': past_course_list,
         'course_list': course_list,
         'have_messaged': have_messaged, 
         }

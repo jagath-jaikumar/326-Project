@@ -10,7 +10,7 @@
 
 	      {% for section in section_list %}
 	      <li>
-	        <a href='#'>{{ section.course.name }}</a>
+	        <a href='#'>{{ section }} {{ section.course }}</a>
 	      </li>
 	      {% endfor %}
 
@@ -22,7 +22,7 @@
 	    <ul>
 	      {% for course in past_course_list %}
 	      <li>
-	        <p>{{ course.name }}</p>
+	        <p>{{ course }}</p>
 	      </li>
 	      {% endfor %}
 
@@ -34,7 +34,7 @@
 	    <ul>
 	      {% for user in have_messaged %}
 	      <li>
-	        <a href='#'>{{ user.name }}</a>
+	        <a href='#'>{{ user }}</a>
 	      </li>
 	      {% endfor %}
 

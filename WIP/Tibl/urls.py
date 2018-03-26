@@ -1,9 +1,9 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('<int:pk>', views.index, name='index'),
     path('classpage/', views.classpage, name='class'),
     path('messaging/', views.messaging, name='messages'),
     path('myprofile/', views.myprofile, name='myprofile'),
