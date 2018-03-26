@@ -4,11 +4,21 @@ from django.shortcuts import render
 
 from .models import Course, Section, Post, Student, Teacher, Department
 
-def index(request):
+def index(request, pk):
+    past_course_list = Section.objects.filter(student=pk).course.name
+    course_list = Section.objects.filter(student=pk).filter(season='Sp').filter(year=2018).course.name
+    have_messaged = Message.objects.filter(sender=pk).receiver | Message.objects.filter(receiver=pk).sender
+
     return render(
         request,
         'index.html',
+        context={
+        'past_course_list': pastcourse_list,
+        'course_list': course_list,
+        'have_messaged': have_messaged, 
+        }
     )
+
 
 def classpage(request):
     course_name = Section.course.name
@@ -41,3 +51,28 @@ def friendprofile(request):
         request,
         'friendprofile.html',
     )
+
+def home(request):
+    return render(
+        request,
+        'home.html'
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

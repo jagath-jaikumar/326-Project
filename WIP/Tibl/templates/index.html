@@ -4,5 +4,40 @@
 <h1>Tibl Home</h1>
 
   <p>Welcome to <em>Tibl</em></p>
+	    <h1>Your Courses</h1>
+	    {% if section_list %}
+	    <ul>
 
+	      {% for section in section_list %}
+	      <li>
+	        <a href='#'>{{ section.course.name }}</a>
+	      </li>
+	      {% endfor %}
+
+	    </ul>
+		{% endif %} 
+
+	    {% if past_course_list %}
+
+	    <ul>
+	      {% for course in past_course_list %}
+	      <li>
+	        <p>{{ course.name }}</p>
+	      </li>
+	      {% endfor %}
+
+	    </ul>
+		{% endif %}
+
+		{% if have_messaged %}
+		<p>Messages</p>
+	    <ul>
+	      {% for user in have_messaged %}
+	      <li>
+	        <a href='#'>{{ user.name }}</a>
+	      </li>
+	      {% endfor %}
+
+	    </ul>
+		{% endif %}
 {% endblock %}
