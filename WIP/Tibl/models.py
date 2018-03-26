@@ -41,7 +41,7 @@ class Student(models.Model):
 		String for representing the Model object (in Admin site etc.)
 		"""
 		return self.full_name
-
+	
 class Teacher(models.Model):
 	"""
 	Model representing a Teacher
