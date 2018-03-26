@@ -30,3 +30,9 @@ The user interface for our app will consist of five major user experience compon
 - Messages - for communication between students
 
 The app itself will have five views for users to navigate through. The home view will be landing page for the app, and it will contain a list of classes that the user is enrolled in, a list of students that the user can directly message, and a news feed for one of the classes. If the user wants to see a different news feed, he can click on a different class name on the side panel. From the home view, users can go to their own profile view or the profile of another student where they can see what classes that student is currently enrolled in and has taken prior to the current semester. If the user clicks on a class name, they can go to the view of that class where they will see the class roster and which teachers are associated with that class. A final view will be for users to directly message each other.
+
+## Superuser Credentials
+
+username: wiptibl
+email: wiptibl@umass.edu
+password: wiptiblwiptibl
