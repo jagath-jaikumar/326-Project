@@ -6,6 +6,7 @@ from .models import Course, Section, Post, Student, Teacher, Department, Message
 
 def index(request, pk):
     past_course_list = Section.objects.filter(students=pk)
+    print(len(past_course_list))
     course_list = Section.objects.filter(students=pk).filter(season='Sp').filter(year=2018)
     have_messaged = [message.receiver for message in Message.objects.filter(sender=pk)] +\
                     [message.sender for message in Message.objects.filter(receiver=pk)]
