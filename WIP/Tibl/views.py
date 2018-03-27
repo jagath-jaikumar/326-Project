@@ -11,26 +11,23 @@ def index(request):
     )
 
 def classpage(request, num_):
-    '''
-    course_name = Section.course.name
-    course_number = Section.course.number
-    year = Section.year
-    season = Section.season
-    teachers = Section.teachers
-    students = Section.students
-    '''
 
     section = Section.objects.get(id=num_)
-    
+    year = section.year
+    season = section.season
+    teachers_list = section.teachers.all()
+    course = section.course
+    course_name = course.name
+    course_number = course.number
+    course_department = course.department
     students_list = section.students.all()
-
-    #print(students_list)
+    
+    test = 'profile_pictures/sagar.jpg'
 
     return render(
         request,
         'classpage.html',
-        #context={'name':course_name,'number':course_number,'year':year,'season':season, 'teachers':teachers, 'students':students},
-        context={'students':students_list}
+        context={'test':test, 'students':students_list, 'year':year, 'season':season, 'teachers':teachers_list, 'name':course_name, 'department':course_department, 'number':course_number }
     )
 
 def messaging(request):

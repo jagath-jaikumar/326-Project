@@ -1,14 +1,17 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+
   <body>
 
     <section class="jumbotron text-center">
       <div class="container">
-        <h1 class="jumbotron-heading">CS 326</h1>
-        <p>Instructor: <a href="#">Tim Richards</a></p> 
+        <h1 class="jumbotron-heading">{{ department }} {{ number }}</h1>
+        {% for teacher in teachers %}
+        <p>Instructor: <a href="#">{{ teacher.full_name }}</a></p> 
+        {% endfor %}
         <p>
-          <a href="#" class="btn btn-primary">Go to message feed</a>
+          <a href="/" class="btn btn-primary">Go to message feed</a>
         </p>
       </div>
     </section>
@@ -16,61 +19,16 @@
     <div class="album text-muted">
       <div class="container">
         <div class="row">
+          {% for student in students %}
           <div class="card">
-            <img src="../img/pic1.jpeg" alt="pic1">
-            <p class="card-text">Bobby J</p>
+              {% load static %}   
+              <img src="{% static student.profile_picture.url  %}" alt="pic1">
+            <p class="card-text">{{ student.full_name }}  {{ student.profile_picture }}</p>
           </div>
-          <div class="card">
-            <img src="../img/pic2.jpeg" alt="Card image cap">
-            <p class="card-text">Daniel Tyson</p>
-          </div>
-          <div class="card">
-            <img src="../img/pic3.jpeg" alt="Card image cap">
-            <p class="card-text">John Septen</p>
-          </div>
-          <div class="card">
-            <img src="../img/pic4.jpeg" alt="Card image cap">
-            <p class="card-text">Wally O.</p>
-          </div>
-          <div class="card">
-            <img src="../img/pic5.jpeg" alt="Card image cap">
-            <p class="card-text">Lynn Jenner</p>
-          </div>
-          <div class="card">
-            <img src="../img/pic6.jpeg" alt="Card image cap">
-            <p class="card-text">Casey Wako</p>
-          </div>
-          <div class="card">
-            <img src="../img/pic7.jpeg" alt="Card image cap">
-            <p class="card-text">Geoff Sesh</p>
-          </div>
-          <div class="card">
-            <img src="../img/pic10.jpeg" alt="Card image cap">
-            <p class="card-text">Danni T.</p>
-          </div>
-          <div class="card">
-            <img src="../img/pic9.jpeg" alt="Card image cap">
-            <p class="card-text">Orrin H.</p>
-          </div>
+          {% endfor %}
         </div>
 
       </div>
     </div>
 
 {% endblock %} 
-<!--
-<h1>Tibl Home</h1>
-
-  <p>Welcome to <em>Tibl</em></p>
-
-  <h2>Dynamic content</h2>
-
-  <p>The class has the following:</p>
-  <ul>
-    <li><strong>Name:</strong> {{ classnum }}</li>
-  </ul>
-
-  {% for student in students %}
-    {{ student.full_name }}  {{ student.grad_year }} <br>
-  {% endfor %}
--->
