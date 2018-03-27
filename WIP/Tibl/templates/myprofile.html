@@ -21,10 +21,6 @@
         <div class="row">
 
           <div class="col-md-4 col-sm-offset-1">
-            <!-- <div class="empty-card"></div>
-            <div class="empty-card"></div>
-            <div class="empty-card"></div>
-            <div class="empty-card"></div> -->
             <p class="class-list-title">{{ student.full_name }}'s Current Classes</p>
 
             {% for section in sections %}
@@ -43,7 +39,7 @@
             {% for section in sections %}
             	{% if section.season != "Sp" %}
 	            	<div class="class-card">
-	              		<p class="card-text">{{ section.course.number }} - {{ section.course.name }}</p>
+	              		<a href="{% url 'class' section.id %}" class="card-text">{{ section.course.number }} - {{ section.course.name }}</a>
 	            	</div>
 	            {% endif %}
 			{% endfor %}
@@ -54,18 +50,5 @@
 
       </div>
     </div>
-
-    <footer class="text-muted">
-      <div class="container">
-        <p>WIP: Work-in-Progress</p>
-        </div>
-    </footer>
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script>
-      $(function () {
-        Holder.addTheme("thumb", { background: "#55595c", foreground: "#eceeef", text: "Thumbnail" });
-      });
-    </script>
 
 {% endblock %}
