@@ -19,11 +19,9 @@ def classpage(request, num_):
     teachers = Section.teachers
     students = Section.students
     '''
-    class_num = num_
 
-    course_  = Course.objects.get(number = num_)
-    section = Section.objects.get(year = 2018, season = 'Sp')
-
+    section = Section.objects.get(id=num_)
+    
     students_list = section.students.all()
 
     #print(students_list)
@@ -32,7 +30,7 @@ def classpage(request, num_):
         request,
         'classpage.html',
         #context={'name':course_name,'number':course_number,'year':year,'season':season, 'teachers':teachers, 'students':students},
-        context={'classnum':course_.number, 'students':students_list}
+        context={'students':students_list}
     )
 
 def messaging(request):
