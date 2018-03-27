@@ -28,7 +28,7 @@ def classpage(request, num_):
         context={'students':students_list, 'year':year, 'season':season, 'teachers':teachers_list, 'name':course_name, 'department':course_department, 'number':course_number }
     )
 
-def messaging(request):
+def messaging(request, profile_id):
     return render(
         request,
         'messaging.html',

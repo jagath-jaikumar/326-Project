@@ -22,7 +22,7 @@
     <div class="container d-flex justify-content-between">
       <a href="/" class="navbar-brand">Home</a>
       <a href="{% url 'myprofile' 1%}" class="navbar-brand">Your Profile</a>
-      <a href="{% url 'messages' %}" class="navbar-brand">Messages</a>
+      <a href="{% url 'messages' 1%}" class="navbar-brand">Messages</a>
     </div>
   </div>
   {% block content %}
