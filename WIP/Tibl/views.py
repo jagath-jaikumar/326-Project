@@ -21,19 +21,29 @@ def index(request, pk):
         }
     )
 
-
-def classpage(request):
+def classpage(request, num_):
+    '''
     course_name = Section.course.name
     course_number = Section.course.number
     year = Section.year
     season = Section.season
     teachers = Section.teachers
     students = Section.students
+    '''
+    class_num = num_
+
+    course_  = Course.objects.get(number = num_)
+    section = Section.objects.get(year = 2018, season = 'Sp')
+
+    students_list = section.students.all()
+
+    #print(students_list)
 
     return render(
         request,
         'classpage.html',
-        context={'name':course_name,'number':course_number,'year':year,'season':season, 'teachers':teachers, 'students':students},
+        #context={'name':course_name,'number':course_number,'year':year,'season':season, 'teachers':teachers, 'students':students},
+        context={'classnum':course_.number, 'students':students_list}
     )
 
 def messaging(request):
@@ -53,28 +63,3 @@ def friendprofile(request):
         request,
         'friendprofile.html',
     )
-
-def home(request):
-    return render(
-        request,
-        'home.html'
-    )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
