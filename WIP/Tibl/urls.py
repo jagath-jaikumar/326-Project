@@ -7,5 +7,5 @@ urlpatterns = [
     path('classpage/<int:num_>', views.classpage, name='class'),
     path('messaging/', views.messaging, name='messages'),
     path('myprofile/<int:profile_id>', views.myprofile, name='myprofile'),
-    path('friendprofile/', views.friendprofile, name='friendprofile'),
+    path('friendprofile/<int:profile_id>', views.friendprofile, name='friendprofile'),
 ]

@@ -45,8 +45,12 @@ def myprofile(request, profile_id):
         context={'student':student, 'sections':sections}
     )
 
-def friendprofile(request):
+def friendprofile(request, profile_id):
+    student = Student.objects.get(id = profile_id)
+    sections = Section.objects.filter(students__id__exact=profile_id)
+
     return render(
         request,
         'friendprofile.html',
+        context={'student':student, 'sections':sections}
     )
