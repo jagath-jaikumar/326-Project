@@ -1,6 +1,10 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+
+	{% load static %}
+ 	<link rel="stylesheet" href="{% static 'css/myprofile.css' %}">
+
 	<div class="navbar navbar-inverse bg-inverse">
       <div class="container d-flex justify-content-between">
         <a href="#" class="navbar-brand">Home</a>
@@ -10,19 +14,19 @@
     <section class="jumbotron text-center">
       <div class="container">
         <h1 class="jumbotron-heading">{{ student.full_name }}</h1>
-        <p class="lead text-muted">View and edit your profile</p>
+        <p class="lead text-muted">View your profile</p>
       </div>
     </section>
 
     <div class="album text-muted">
       <div class="container">
       	{% load static %}
-        <img class="profile-image" src="{% static student.profile_picture.url %}" alt="pic1" height="60" width="60">
+        <img class="profile-image" src="{% static student.profile_picture.url %}" alt="pic1">
         <p class="profile-title"> {{ student.full_name }} </p>
         <p class="profile-subheading">{{ student.grad_year }}</p>
         <div class="row">
 
-          <div class="col-md-2 col-sm-offset-3">
+          <div class="col-md-4 col-sm-offset-1">
             <!-- <div class="empty-card"></div>
             <div class="empty-card"></div>
             <div class="empty-card"></div>
@@ -32,14 +36,14 @@
             {% for section in sections %}
             	{% if section.season == "Sp" %}
 	            	<div class="class-card">
-	              		<p class="card-text">{{ section.course.number }} - {{ section.course.name }}</p>
+	              		<a href="{% url 'class' section.id %}" class="card-text">{{ section.course.number }} - {{ section.course.name }}</a>
 	            	</div>
 	            {% endif %}
 			{% endfor %}
 
           </div>
 
-          <div class="col-md-2 col-sm-offset-2">
+          <div class="col-md-4 col-sm-offset-2">
             <p class="class-list-title">{{ student.full_name }}'s Previous Classes</p>
             
             {% for section in sections %}
