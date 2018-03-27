@@ -41,10 +41,15 @@ def messaging(request):
         'messaging.html',
     )
 
-def myprofile(request):
+def myprofile(request, profile_id):
+
+    student = Student.objects.get(id = profile_id)
+    sections = Section.objects.filter(students__id__exact=profile_id)
+
     return render(
         request,
         'myprofile.html',
+        context={'student':student, 'sections':sections}
     )
 
 def friendprofile(request):

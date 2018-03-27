@@ -6,6 +6,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('classpage/<int:num_>', views.classpage, name='class'),
     path('messaging/', views.messaging, name='messages'),
-    path('myprofile/', views.myprofile, name='myprofile'),
+    path('myprofile/<int:profile_id>', views.myprofile, name='myprofile'),
     path('friendprofile/', views.friendprofile, name='friendprofile'),
 ]
