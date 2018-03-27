@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
+  {% load static %}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="icon" href="../favicon.ico">
+  <link rel="icon" href="{% static 'img/favicon.ico' %}">
 
-  <title>CS 326 Home Page</title>
-  {% load static %}
+  <title>Tibl</title>
+
   <!-- Bootstrap core -->
-  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
   <!-- Custom styles 
   <link href="../css/home.css" rel="stylesheet">-->
@@ -22,7 +22,7 @@
     <div class="container d-flex justify-content-between">
       <a href="/" class="navbar-brand">Home</a>
       <a href="{% url 'myprofile' 1%}" class="navbar-brand">Your Profile</a>
-      <a href="/messages" class="navbar-brand">Messages</a>
+      <a href="{% url 'messages' %}" class="navbar-brand">Messages</a>
     </div>
   </div>
   {% block content %}
