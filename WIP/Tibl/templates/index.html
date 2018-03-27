@@ -6,11 +6,11 @@
   <p>Welcome to <em>Tibl</em></p>
 	    <h1>Your Courses</h1>
 	    {% if section_list %}
+	    <p>current classes</p>
 	    <ul>
-	    	<p>current classes</p>
 	      {% for section in section_list %}
 	      <li>
-	        <a href='#'>{{ section }} {{ section.course }}</a>
+	        <a href="{% url 'class' section.pk %}">{{ section.course.department }} {{ section.course.number }} {{ section.course.name }}</a>
 	      </li>
 	      {% endfor %}
 
@@ -22,7 +22,7 @@
 	    <ul>
 	      {% for course in past_course_list %}
 	      <li>
-	        <p>{{ course }}</p>
+	        <p>{{ course.department }} {{ course.number }} {{ course.name }}</p>
 	      </li>
 	      {% endfor %}
 
@@ -34,7 +34,7 @@
 	    <ul>
 	      {% for user in have_messaged %}
 	      <li>
-	        <a href='#'>{{ user }}</a>
+	        <a href="{% url 'messages' cur_user user.pk %}">{{ user }}</a>
 	      </li>
 	      {% endfor %}
 

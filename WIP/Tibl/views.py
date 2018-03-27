@@ -1,24 +1,25 @@
 from django.shortcuts import render
+from django.db.models import Q
+
 
 # Create your views here.
 
 from .models import Course, Section, Post, Student, Teacher, Department, Message 
 
 def index(request, pk):
-    past_course_list = Section.objects.filter(students=pk)
-    print(len(past_course_list))
-    course_list = Section.objects.filter(students=pk).filter(season='Sp').filter(year=2018)
+    past_course_list = Section.objects.filter(students=pk).filter(~(Q(year=2018) & Q(season='Sp')))
+    section_list = Section.objects.filter(students=pk).filter(season='Sp').filter(year=2018)
     have_messaged = [message.receiver for message in Message.objects.filter(sender=pk)] +\
                     [message.sender for message in Message.objects.filter(receiver=pk)]
-    
 
     return render(
         request,
         'index.html',
         context={
         'past_course_list': past_course_list,
-        'course_list': course_list,
-        'have_messaged': have_messaged, 
+        'section_list': section_list,
+        'have_messaged': have_messaged,
+        'cur_user': pk,
         }
     )
 
