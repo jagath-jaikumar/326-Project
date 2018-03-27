@@ -11,6 +11,9 @@ def index(request, pk):
     section_list = Section.objects.filter(students=pk).filter(season='Sp').filter(year=2018)
     have_messaged = [message.receiver for message in Message.objects.filter(sender=pk)] +\
                     [message.sender for message in Message.objects.filter(receiver=pk)]
+
+    other_classmates = Student.objects.filter(section__in=section_list).filter(~Q(pk=pk)).distinct()
+
     # remove non-distinct elements
     have_messaged = list(set(have_messaged))
 
@@ -25,9 +28,13 @@ def index(request, pk):
         'section_list': section_list,
         'have_messaged': have_messaged,
         'cur_user': pk,
-        'posts': posts
+        'posts': posts, 
+        'other_classmates': other_classmates,
         }
     )
+
+def default_index(request):
+    return index(request, pk=1)
 
 def classpage(request, num_):
 

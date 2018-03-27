@@ -1,6 +1,8 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 <div class="col-md-3">
 	<div class="row no-margin">
 		<form class="navbar-search">
@@ -23,7 +25,7 @@
 					{% for section in section_list %}
 					<li class="list-group-item">
 						<a href="{% url 'class' section.pk %}" class="btn btn-info class_btn" role="button">
-							{{ section.course.department }} {{ section.course.number }} {{ section.course.name }}
+							{{ section.course.department }} {{ section.course.number }}
 						</a>
 					</li>
 					{% endfor %}
@@ -37,17 +39,17 @@
 		<div class="panel-group">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<a data-toggle="collapse" href="#current_class_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample" class="panel-title">
+					<a data-toggle="collapse" href="#past_class_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample" class="panel-title">
 						<p class="panel-title">
 							Current Classes
 						</p>
 					</a>
 				</div>
-				<div id="current_class_dropdown" class="collapse in" style="overflow:hidden">
+				<div id="past_class_dropdown" class="collapse in" style="overflow:hidden">
 					{% for section in past_section_list %}
 					<li class="list-group-item">
 						<a href="{% url 'class' section.pk %}" class="btn btn-info class_btn" role="button">
-							{{ section.course.department }} {{ section.course.number }} {{ section.course.name }}
+							{{ section.course.department }} {{ section.course.number }}
 						</a>
 					</li>
 					{% endfor %}
@@ -56,21 +58,7 @@
 		</div>
 	</div>
 	{% endif %}
-
-	{% if have_messaged %}
-	<p>Messages</p>
-	<ul>
-		{% for user in have_messaged %}
-		<li>
-			<a href="{% url 'messages' cur_user user.pk %}">{{ user }}</a>
-		</li>
-		{% endfor %}
-
-	</ul>
-	{% endif %}
-	{% endblock %}
-
-
+</div>
 
 <div class="col-md-6">
 
@@ -80,62 +68,34 @@
 		<div class="input-group">
 			<div class="input-group-btn">
 				<select class="form-control" id="class_select">
-					<option>CS 187</option>
-					<option>MA 132</option>
-					<option>PH 152</option>
-					<option>CH 112</option>
-					<option>AR 101</option>
+					{% if section_list %}
+					{% for section in section_list %}
+					<option> {{ section.course.department }} {{ section.course.number }}</option>
+					{% endfor %}
+					{% else %}
+					<option>Add some classes before you post!</option>
+					{% endif %}
 				</select>
 				<button type="button" class="btn btn-primary" id="post_button">Post!</button>
 			</div>
 		</div>
 	</div>
+	{% if posts %}
+	{% for post in posts %}
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Bobby J</h3>
+			<h3 class="panel-title">{{ post.poster.full_name }}</h3>
 		</div>
 		<div class="panel-body">
-			Gee whiz, what a great lecture! Tim Richards delivering a classic once again!
+			{{ post.content }}
 		</div>
 		<div class="panel-footer">
-			CS 187
+			{{ post.section.course.department }} {{ post.section.course.number }}
 		</div>
 	</div>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">Casey Wako</h3>
-		</div>
-		<div class="panel-body">
-			Darn I'm bored, I can't wait until I get to CS 230 with your boy T.Rich later!
-		</div>
-		<div class="panel-footer">
-			MA 132
-		</div>
-	</div>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">You</h3>
-		</div>
-		<div class="panel-body">
-			Drew a picture of my favorite professor in Art today!
-		</div>
-		<div class="panel-footer">
-			AR 101
-		</div>
-	</div>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">Lynn Jenner</h3>
-		</div>
-		<div class="panel-body">
-			Physics makes no sense, anyone want to study for the exam later?
-		</div>
-		<div class="panel-footer">
-			PH 152
-		</div>
-	</div>
+	{% endfor %}
+	{% endif %}
 </div>
-
 <div class="col-md-3">
 	<div class="row no-margin">
 		<form class="navbar-search">
@@ -150,15 +110,19 @@
 						<a data-toggle="collapse" href="#recent_contacts_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample">Recently Contacted</a>
 					</p>
 				</div>
+				{% if have_messaged %}
 				<div id="recent_contacts_dropdown" class="collapse in">
 					<ul class="list-group">
-						<a><li class="list-group-item"><span class="badge">4</span>Bobby J</li></a>
-						<a><li class="list-group-item"><span class="badge">1</span>Daniel Tyson</li></a>
-						<a><li class="list-group-item"><span class="badge"></span>John Stephen</li></a>
-						<a><li class="list-group-item"><span class="badge">5</span>Wally O.</li></a>
-						<a><li class="list-group-item"><span class="badge">29</span>Lynn Jenner</li></a>
+						{% for message in have_messaged %}
+						<a href="{% url 'messages' message.pk %}">
+							<li class="list-group-item">
+								{{ message.full_name }}
+							</li>
+						</a>
+						{% endfor %}
 					</ul>
 				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>
@@ -170,15 +134,17 @@
 						<a data-toggle="collapse" href="#classmates_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample">Other Classmates</a>
 					</p>
 				</div>
+				{% if other_classmates %}
 				<div id="classmates_dropdown" class="collapse in">
 					<ul class="list-group">
-						<a><li class="list-group-item">Casey Wako</li></a>
-						<a><li class="list-group-item">Geoff Sesh</li></a>
-						<a><li class="list-group-item">Danni T.</li></a>
-						<a><li class="list-group-item">Orrin H.</li></a>
+						{% for classmate in other_classmates %}
+						<li class="list-group-item"><a href="{% url 'friendprofile' classmate.pk %}">{{ classmate.full_name }}</a></li>
+						{% endfor %}
 					</ul>
 				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>
 </div>
+{% endblock %}
