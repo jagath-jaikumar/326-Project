@@ -1,11 +1,11 @@
 {% extends "base_generic.html" %}
-
+{% load static %}
 {% block content %}
     <div class="col-md-2">
     	{% for message in messages %}
         <h4> Messages</h4>
         <div class="first">
-            <img src="../img/jagath.jpg" class="img-circle">
+            <img src="{% static message.sender.profile_picture.url  %}" class="img-circle">
             <h5>{{message.sender}}</h5>
             <p>{{message.content}}</p>
         </div>
@@ -17,7 +17,7 @@
         <div class="chatbox">
             <div class="chatlogs">
                 <div class="chat friend">
-                    <div class = "user-photo"><img src= "../img/sagar.jpg" class="img-circle"></div>
+                    <div class = "user-photo"><img src= "{% static message.receiver.profile_picture.url  %}" class="img-circle"></div>
                     <p class ="chat-message">{{message.content}}</p>
                 </div>
             </div>
