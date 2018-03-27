@@ -29,9 +29,11 @@ def classpage(request, num_):
     )
 
 def messaging(request, profile_id):
+    messages = Messages.objects.all()
     return render(
         request,
         'messaging.html',
+        context=(messages:messages)
     )
 
 def myprofile(request, profile_id):
