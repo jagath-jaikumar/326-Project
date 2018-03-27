@@ -1,19 +1,35 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h1>Tibl Home</h1>
 
-  <p>Welcome to <em>Tibl</em></p>
+{% load static %}
+  <link rel="stylesheet" href="{% static 'css/classpage.css' %}">
+  <body>
 
-  <h2>Dynamic content</h2>
+    <section class="jumbotron text-center">
+      <div class="container">
+        <h1 class="jumbotron-heading">{{ department }} {{ number }}</h1>
+        {% for teacher in teachers %}
+        <p>Instructor: <a href="#">{{ teacher.full_name }}</a></p> 
+        {% endfor %}
+        <p>
+          <a href="/" class="btn btn-primary">Go to message feed</a>
+        </p>
+      </div>
+    </section>
 
-  <p>The class has the following:</p>
-  <ul>
-    <li><strong>Name:</strong> {{ classnum }}</li>
-  </ul>
+    <div class="album text-muted">
+      <div class="container">
+        <div class="row">
+          {% for student in students %}
+          <div class="card">
+              <img src="{% static student.profile_picture.url  %}" alt="pic1">
+            <p class="card-text">{{ student.full_name }}, Class of {{ student.grad_year }}</p>
+          </div>
+          {% endfor %}
+        </div>
 
-  {% for student in students %}
-    {{ student.full_name }}  {{ student.grad_year }} <br>
-  {% endfor %}
+      </div>
+    </div>
 
-{% endblock %}
+{% endblock %} 
