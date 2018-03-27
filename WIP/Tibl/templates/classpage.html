@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% load static %}
+  <link rel="stylesheet" href="{% static 'css/classpage.css' %}">
   <body>
 
     <section class="jumbotron text-center">
@@ -21,9 +23,8 @@
         <div class="row">
           {% for student in students %}
           <div class="card">
-              {% load static %}   
               <img src="{% static student.profile_picture.url  %}" alt="pic1">
-            <p class="card-text">{{ student.full_name }}  {{ student.profile_picture }}</p>
+            <p class="card-text">{{ student.full_name }}  {{ student.grad_year }}</p>
           </div>
           {% endfor %}
         </div>

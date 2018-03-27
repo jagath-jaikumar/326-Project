@@ -21,13 +21,11 @@ def classpage(request, num_):
     course_number = course.number
     course_department = course.department
     students_list = section.students.all()
-    
-    test = 'profile_pictures/sagar.jpg'
 
     return render(
         request,
         'classpage.html',
-        context={'test':test, 'students':students_list, 'year':year, 'season':season, 'teachers':teachers_list, 'name':course_name, 'department':course_department, 'number':course_number }
+        context={'students':students_list, 'year':year, 'season':season, 'teachers':teachers_list, 'name':course_name, 'department':course_department, 'number':course_number }
     )
 
 def messaging(request):
