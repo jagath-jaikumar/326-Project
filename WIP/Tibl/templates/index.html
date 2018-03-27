@@ -1,43 +1,184 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h1>Tibl Home</h1>
+<div class="col-md-3">
+	<div class="row no-margin">
+		<form class="navbar-search">
+			<input type="text" class="search-query full" placeholder="Add Classes">
+		</form>
+	</div>
+	<h1>Your Courses</h1>
+	{% if section_list %}
+	<div class="row">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a data-toggle="collapse" href="#current_class_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample" class="panel-title">
+						<p class="panel-title">
+							Current Classes
+						</p>
+					</a>
+				</div>
+				<div id="current_class_dropdown" class="collapse in" style="overflow:hidden">
+					{% for section in section_list %}
+					<li class="list-group-item">
+						<a href="{% url 'class' section.pk %}" class="btn btn-info class_btn" role="button">
+							{{ section.course.department }} {{ section.course.number }} {{ section.course.name }}
+						</a>
+					</li>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	{% if past_section_list %}
+	<div class="row">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a data-toggle="collapse" href="#current_class_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample" class="panel-title">
+						<p class="panel-title">
+							Current Classes
+						</p>
+					</a>
+				</div>
+				<div id="current_class_dropdown" class="collapse in" style="overflow:hidden">
+					{% for section in past_section_list %}
+					<li class="list-group-item">
+						<a href="{% url 'class' section.pk %}" class="btn btn-info class_btn" role="button">
+							{{ section.course.department }} {{ section.course.number }} {{ section.course.name }}
+						</a>
+					</li>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
 
-  <p>Welcome to <em>Tibl</em></p>
-	    <h1>Your Courses</h1>
-	    {% if section_list %}
-	    <p>current classes</p>
-	    <ul>
-	      {% for section in section_list %}
-	      <li>
-	        <a href="{% url 'class' section.pk %}">{{ section.course.department }} {{ section.course.number }} {{ section.course.name }}</a>
-	      </li>
-	      {% endfor %}
+	{% if have_messaged %}
+	<p>Messages</p>
+	<ul>
+		{% for user in have_messaged %}
+		<li>
+			<a href="{% url 'messages' cur_user user.pk %}">{{ user }}</a>
+		</li>
+		{% endfor %}
 
-	    </ul>
-		{% endif %} 
+	</ul>
+	{% endif %}
+	{% endblock %}
 
-	    {% if past_course_list %}
-	    <p>past classes</p>
-	    <ul>
-	      {% for course in past_course_list %}
-	      <li>
-	        <p>{{ course.department }} {{ course.number }} {{ course.name }}</p>
-	      </li>
-	      {% endfor %}
 
-	    </ul>
-		{% endif %}
 
-		{% if have_messaged %}
-		<p>Messages</p>
-	    <ul>
-	      {% for user in have_messaged %}
-	      <li>
-	        <a href="{% url 'messages' cur_user user.pk %}">{{ user }}</a>
-	      </li>
-	      {% endfor %}
+<div class="col-md-6">
 
-	    </ul>
-		{% endif %}
-{% endblock %}
+	<div class="form-group border border-dark">
+		<label for="PostArea">New Post</label>
+		<textarea class="form-control" id="new_post" rows="3" placeholder="Write a new post..."></textarea>
+		<div class="input-group">
+			<div class="input-group-btn">
+				<select class="form-control" id="class_select">
+					<option>CS 187</option>
+					<option>MA 132</option>
+					<option>PH 152</option>
+					<option>CH 112</option>
+					<option>AR 101</option>
+				</select>
+				<button type="button" class="btn btn-primary" id="post_button">Post!</button>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Bobby J</h3>
+		</div>
+		<div class="panel-body">
+			Gee whiz, what a great lecture! Tim Richards delivering a classic once again!
+		</div>
+		<div class="panel-footer">
+			CS 187
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Casey Wako</h3>
+		</div>
+		<div class="panel-body">
+			Darn I'm bored, I can't wait until I get to CS 230 with your boy T.Rich later!
+		</div>
+		<div class="panel-footer">
+			MA 132
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">You</h3>
+		</div>
+		<div class="panel-body">
+			Drew a picture of my favorite professor in Art today!
+		</div>
+		<div class="panel-footer">
+			AR 101
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Lynn Jenner</h3>
+		</div>
+		<div class="panel-body">
+			Physics makes no sense, anyone want to study for the exam later?
+		</div>
+		<div class="panel-footer">
+			PH 152
+		</div>
+	</div>
+</div>
+
+<div class="col-md-3">
+	<div class="row no-margin">
+		<form class="navbar-search">
+			<input type="text" class="search-query full" placeholder="Search Contacts">
+		</form>
+	</div>
+	<div class="row">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<p class="panel-title">
+						<a data-toggle="collapse" href="#recent_contacts_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample">Recently Contacted</a>
+					</p>
+				</div>
+				<div id="recent_contacts_dropdown" class="collapse in">
+					<ul class="list-group">
+						<a><li class="list-group-item"><span class="badge">4</span>Bobby J</li></a>
+						<a><li class="list-group-item"><span class="badge">1</span>Daniel Tyson</li></a>
+						<a><li class="list-group-item"><span class="badge"></span>John Stephen</li></a>
+						<a><li class="list-group-item"><span class="badge">5</span>Wally O.</li></a>
+						<a><li class="list-group-item"><span class="badge">29</span>Lynn Jenner</li></a>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<p class="panel-title">
+						<a data-toggle="collapse" href="#classmates_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample">Other Classmates</a>
+					</p>
+				</div>
+				<div id="classmates_dropdown" class="collapse in">
+					<ul class="list-group">
+						<a><li class="list-group-item">Casey Wako</li></a>
+						<a><li class="list-group-item">Geoff Sesh</li></a>
+						<a><li class="list-group-item">Danni T.</li></a>
+						<a><li class="list-group-item">Orrin H.</li></a>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
