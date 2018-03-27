@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from .models import Course, Section, Post, Student, Teacher, Department
+from .models import Course, Section, Post, Student, Teacher, Department, Message
 
 def index(request):
     return render(
@@ -29,11 +29,11 @@ def classpage(request, num_):
     )
 
 def messaging(request, profile_id):
-    messages = Messages.objects.all()
+    messages = Message.objects.all()
     return render(
         request,
         'messaging.html',
-        context=(messages:messages)
+        context={'messages':messages}
     )
 
 def myprofile(request, profile_id):

@@ -1,13 +1,6 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<script src="http://code.jquery.com/jquery.js"></script>
-    <script src="../js/vendor/bootstrap.min.js"></script>
-    <div class="navbar navbar-inverse bg-inverse">
-   		<div class="container d-flex justify-content-between">
-     		<a href="#" class="navbar-brand">Home</a>
-   		</div>
- 	</div>
     <div class="col-md-2">
     	{% for message in messages %}
         <h4> Messages</h4>
@@ -16,7 +9,7 @@
             <h5>{{message.sender}}</h5>
             <p>{{message.content}}</p>
         </div>
-       { % endfor %}
+       {% endfor %}
     </div>
        {% for message in messages %}
     <div class="col-md-10">
@@ -34,6 +27,6 @@
             </div>
         </div>
     </div>
-       {% endfor %)
+       {% endfor %}
 
 {% endblock %}
