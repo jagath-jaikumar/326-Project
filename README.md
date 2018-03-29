@@ -33,6 +33,6 @@ The app itself will have five views for users to navigate through. The home view
 
 ## Superuser Credentials
 
-username: wiptibl
+username: compsci326
 email: wiptibl@umass.edu
-password: wiptiblwiptibl
+password: compsci326
