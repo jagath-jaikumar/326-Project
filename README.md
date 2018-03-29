@@ -1,5 +1,9 @@
 # 326-Project
 
+### Project 1 Folder - project1
+### Project 2 Folder - WIP
+### Writeups Folder - writeups
+
 ## Contributors
 
 - Adam Rivelli
