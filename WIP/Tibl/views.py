@@ -14,7 +14,6 @@ def index(request, pk):
     have_messaged = list(set(have_messaged))
 
     posts = Post.objects.filter(id__in=section_list)
-    print(posts[0].content)
 
     return render(
         request,
