@@ -4,6 +4,7 @@ from django.db.models import Q
 
 # Create your views here.
 
+<<<<<<< HEAD
 from .models import Course, Section, Post, Student, Teacher, Department, Message 
 
 def index(request, pk):
@@ -19,6 +20,9 @@ def index(request, pk):
 
     posts = Post.objects.filter(id__in=section_list)
     print(posts[0].content)
+=======
+from .models import Course, Section, Post, Student, Teacher, Department, Message
+>>>>>>> message-template
 
     return render(
         request,
@@ -55,9 +59,11 @@ def classpage(request, num_):
     )
 
 def messaging(request, profile_id):
+    messages = Message.objects.all()
     return render(
         request,
         'messaging.html',
+        context={'messages':messages}
     )
 
 def myprofile(request, profile_id):

@@ -1,8 +1,33 @@
 {% extends "base_generic.html" %}
-
+{% load static %}
 {% block content %}
-<h1>Tibl Home</h1>
-
-  <p>Welcome to <em>Tibl</em></p>
+<link rel="stylesheet" href="{% static 'css/messaging.css' %}">
+    <div class="col-md-2">
+    	{% for message in messages %}
+        <h4> Messages</h4>
+        <div class="first">
+            <img src="{% static message.sender.profile_picture.url  %}" class="img-circle">
+            <h5>{{message.sender}}</h5>
+            <p>{{message.content}}</p>
+        </div>
+       {% endfor %}
+    </div>
+       {% for message in messages %}
+    <div class="col-md-10">
+        <h6> You are now chatting with {{message.sender}}</h6>
+        <div class="chatbox">
+            <div class="chatlogs">
+                <div class="chat friend">
+                    <div class = "user-photo"><img src= "{% static message.receiver.profile_picture.url  %}" class="img-circle"></div>
+                    <p class ="chat-message">{{message.content}}</p>
+                </div>
+            </div>
+            <div class="chat-form">
+                <textarea></textarea>
+                <button>Send</button>
+            </div>
+        </div>
+    </div>
+       {% endfor %}
 
 {% endblock %}
