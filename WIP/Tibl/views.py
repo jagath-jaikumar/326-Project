@@ -1,10 +1,5 @@
 from django.shortcuts import render
 from django.db.models import Q
-
-
-# Create your views here.
-
-<<<<<<< HEAD
 from .models import Course, Section, Post, Student, Teacher, Department, Message 
 
 def index(request, pk):
@@ -20,9 +15,6 @@ def index(request, pk):
 
     posts = Post.objects.filter(id__in=section_list)
     print(posts[0].content)
-=======
-from .models import Course, Section, Post, Student, Teacher, Department, Message
->>>>>>> message-template
 
     return render(
         request,
