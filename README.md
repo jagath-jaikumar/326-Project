@@ -34,5 +34,7 @@ The app itself will have five views for users to navigate through. The home view
 ## Superuser Credentials
 
 username: compsci326
+
 email: wiptibl@umass.edu
+
 password: compsci326
