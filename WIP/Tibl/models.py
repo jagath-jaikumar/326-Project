@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Course(models.Model):
@@ -34,6 +34,7 @@ class Student(models.Model):
 	full_name = models.CharField(max_length=60)
 	grad_year = models.IntegerField()
 	profile_picture = models.ImageField(upload_to="profile_pictures")
+	user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
 
 	
 	def __str__(self):
