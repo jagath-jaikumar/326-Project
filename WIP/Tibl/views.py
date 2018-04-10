@@ -77,3 +77,17 @@ def friendprofile(request, profile_id):
         'friendprofile.html',
         context={'student':student, 'sections':sections}
     )
+
+def register_section_current(request, section_pk):
+    """
+    View function for registering for a current class
+    """
+    section = Section.objects.get(id=section_pk)
+    student = Student.objects.filter(user__id__exact=request.user.id)
+
+   # Create a form instance and populate it with data from the request (binding):
+    if student not in section.students:
+        section.students.append(student)
+        section.save()
+
+    return HttpResponseRedirect(reverse('index'))

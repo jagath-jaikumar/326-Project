@@ -12,4 +12,5 @@ urlpatterns = [
     path('messaging/<int:profile_id>', views.messaging, name='messages'),
     path('myprofile/<int:profile_id>', views.myprofile, name='myprofile'),
     path('friendprofile/<int:profile_id>', views.friendprofile, name='friendprofile'),
+    path('classpage/<int:num_>/register', views.register_section_current, name='register_section_current'),
 ]
