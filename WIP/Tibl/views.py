@@ -78,6 +78,7 @@ def friendprofile(request, profile_id):
         context={'student':student, 'sections':sections}
     )
 
+
 def register_section_current(request, section_pk):
     """
     View function for registering for a current class
@@ -89,5 +90,20 @@ def register_section_current(request, section_pk):
     if student not in section.students:
         section.students.append(student)
         section.save()
+
+    return HttpResponseRedirect(reverse('index'))
+
+def register_section_previous(request, section_pk):
+    """
+    View function for registering for a current class
+    """
+    current_section = Section.objects.get(id=section_pk)
+    previous_section = Section.objects.filter(course__id__exact=current_section.course.id, year__exact=2017)
+    student = Student.objects.filter(user__id__exact=request.user.id)
+
+   # Create a form instance and populate it with data from the request (binding):
+    if student not in previous_section.students:
+        previous_section.students.append(student)
+        previous_section.save()
 
     return HttpResponseRedirect(reverse('index'))
