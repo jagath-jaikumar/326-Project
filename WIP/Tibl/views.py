@@ -63,6 +63,7 @@ def classpage(request, num_):
         context={'students':students_list, 'year':year, 'season':season, 'teachers':teachers_list, 'name':course_name, 'department':course_department, 'number':course_number }
     )
 
+@login_required
 def messaging(request):
     messages = Message.objects.all()
     return render(
@@ -71,6 +72,7 @@ def messaging(request):
         context={'messages':messages}
     )
 
+@login_required
 def myprofile(request):
     profile_id = Student.objects.get(user=request.user.pk).pk
     student = Student.objects.get(id = profile_id)
