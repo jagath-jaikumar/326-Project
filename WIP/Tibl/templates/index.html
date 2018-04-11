@@ -63,22 +63,25 @@
 <div class="col-md-6">
 
 	<div class="form-group border border-dark">
-		<label for="PostArea">New Post</label>
-		<textarea class="form-control" id="new_post" rows="3" placeholder="Write a new post..."></textarea>
-		<div class="input-group">
-			<div class="input-group-btn">
-				<select class="form-control" id="class_select">
-					{% if section_list %}
-					{% for section in section_list %}
-					<option>{{ section.course.department }} {{ section.course.number }}</option>
-					{% endfor %}
-					{% else %}
-					<option>Add some classes before you post!</option>
-					{% endif %}
-				</select>
-				<button type="button" class="btn btn-primary" id="post_button">Post!</button>
+		<form id="post_form" action="" method="post">
+			{% csrf_token %}
+			<label for="PostArea">New Post</label>
+			<textarea name="post_text" form="post_form" class="form-control" id="new_post" rows="3"></textarea>
+			<div class="input-group">
+				<div class="input-group-btn">
+					<select name="class_name" class="form-control" id="class_select">
+						{% if section_list %}
+						{% for section in section_list %}
+						<option>{{ section.course.department }} {{ section.course.number }}</option>
+						{% endfor %}
+						{% else %}
+						<option>Add some classes before you post!</option>
+						{% endif %}
+					</select>
+					<input type="submit" class="btn btn-primary" id="post_button">Post!</input>
+				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 	{% if posts %}
 	{% for post in posts %}
