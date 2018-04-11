@@ -8,15 +8,13 @@ import datetime
 
 @login_required
 def index(request):
-    poster = list(Student.objects.filter(user=request.user.pk))[0]
+    poster = Student.objects.get(user=request.user.pk)
     student_pk = poster.pk
     if request.method == 'POST':
         course_number = request.POST['class_name'].split(' ')[-1]
         course_department = ' '.join(request.POST['class_name'].split(' ')[0:-1])
-        print(course_number)
-        print(course_department)
-        post_section = Section.objects.filter(course__department__name=course_department, course__number=course_number)
-        post_section = list(post_section)[0]
+        post_section = Section.objects.get(course__department__name=course_department, course__number=course_number, 
+                                           season='Sp', year=2018)
         cur_post = Post(content=request.POST["post_text"], creation_date=datetime.datetime, 
                         poster=poster, section=post_section)
         cur_post.save()
@@ -65,7 +63,7 @@ def classpage(request, num_):
         context={'students':students_list, 'year':year, 'season':season, 'teachers':teachers_list, 'name':course_name, 'department':course_department, 'number':course_number }
     )
 
-def messaging(request, profile_id):
+def messaging(request):
     messages = Message.objects.all()
     return render(
         request,
@@ -73,7 +71,8 @@ def messaging(request, profile_id):
         context={'messages':messages}
     )
 
-def myprofile(request, profile_id):
+def myprofile(request):
+    profile_id = Student.objects.get(user=request.user.pk).pk
     student = Student.objects.get(id = profile_id)
     sections = Section.objects.filter(students__id__exact=profile_id)
 
@@ -83,7 +82,7 @@ def myprofile(request, profile_id):
         context={'student':student, 'sections':sections}
     )
 
-def friendprofile(request, profile_id):
+def friendprofile(request, profiled_id):
     student = Student.objects.get(id = profile_id)
     sections = Section.objects.filter(students__id__exact=profile_id)
 
