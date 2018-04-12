@@ -1,22 +1,47 @@
+import datetime
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-import operator
-from .models import Course, Section, Post, Student, Teacher, Department, Message, User 
-import datetime
+from django.contrib.auth.forms import UserCreationForm
+from django.template import RequestContext
+from django.forms import ModelForm
+from .models import Course, Section, Post, Student, Teacher, Department, Message, User
+from .forms import StudentForm
 
+
+def register(request):
+    if request.method == 'POST':
+        user_form = UserCreationForm(request.POST, prefix='user')
+        student_form = StudentForm(request.POST, request.FILES, prefix='student')
+        print('SHIT')
+        print(user_form.is_valid())
+        print(student_form.is_valid())
+        print(student_form.errors)
+        if user_form.is_valid() and student_form.is_valid():
+            user = user_form.save()
+            userprofile = student_form.save(commit=False)
+            userprofile.user = user
+            userprofile.save()
+            print('FUCK')
+            return redirect('index')
+    else:
+        user_form = UserCreationForm(prefix='user')
+        student_form = StudentForm(prefix='student')
+    return render(request, 
+                    'register.html', 
+                    dict(userform=user_form,
+                         studentform=student_form))
 
 @login_required
 def index(request):
-    poster = list(Student.objects.filter(user=request.user.pk))[0]
+    poster = Student.objects.get(user=request.user.pk)
     student_pk = poster.pk
     if request.method == 'POST':
         course_number = request.POST['class_name'].split(' ')[-1]
         course_department = ' '.join(request.POST['class_name'].split(' ')[0:-1])
-        print(course_number)
-        print(course_department)
-        post_section = Section.objects.filter(course__department__name=course_department, course__number=course_number)
-        post_section = list(post_section)[0]
+        post_section = Section.objects.get(course__department__name=course_department, course__number=course_number, 
+                                           season='Sp', year=2018)
         cur_post = Post(content=request.POST["post_text"], creation_date=datetime.datetime, 
                         poster=poster, section=post_section)
         cur_post.save()
@@ -65,15 +90,20 @@ def classpage(request, num_):
         context={'students':students_list, 'year':year, 'season':season, 'teachers':teachers_list, 'name':course_name, 'department':course_department, 'number':course_number }
     )
 
-def messaging(request, profile_id):
-    messages = Message.objects.all()
+@login_required
+def messaging(request):
+    cur_user = request.user.pk
+    cur_student = Student.objects.get(user=cur_user)
+    messages = Message.objects.filter(Q(sender=cur_student) | Q(receiver=cur_student))
     return render(
         request,
         'messaging.html',
         context={'messages':messages}
     )
 
-def myprofile(request, profile_id):
+@login_required
+def myprofile(request):
+    profile_id = Student.objects.get(user=request.user.pk).pk
     student = Student.objects.get(id = profile_id)
     sections = Section.objects.filter(students__id__exact=profile_id)
 

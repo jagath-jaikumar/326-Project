@@ -1,0 +1,12 @@
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+<form method="POST" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ userform.as_p }}
+    {{ studentform.as_p }}
+    <input type="submit">
+</form>
+
+{% endblock %}
