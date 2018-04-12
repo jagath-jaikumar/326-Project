@@ -65,7 +65,9 @@ def classpage(request, num_):
 
 @login_required
 def messaging(request):
-    messages = Message.objects.all()
+    cur_user = request.user.pk
+    cur_student = Student.objects.get(user=cur_user)
+    messages = Message.objects.filter(Q(sender=cur_student) | Q(receiver=cur_student))
     return render(
         request,
         'messaging.html',
