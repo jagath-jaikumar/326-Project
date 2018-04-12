@@ -1,10 +1,37 @@
+import datetime
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-import operator
-from .models import Course, Section, Post, Student, Teacher, Department, Message, User 
-import datetime
+from django.contrib.auth.forms import UserCreationForm
+from django.template import RequestContext
+from django.forms import ModelForm
+from .models import Course, Section, Post, Student, Teacher, Department, Message, User
+from .forms import StudentForm
 
+
+def register(request):
+    if request.method == 'POST':
+        user_form = UserCreationForm(request.POST, prefix='user')
+        student_form = StudentForm(request.POST, request.FILES, prefix='student')
+        print('SHIT')
+        print(user_form.is_valid())
+        print(student_form.is_valid())
+        print(student_form.errors)
+        if user_form.is_valid() and student_form.is_valid():
+            user = user_form.save()
+            userprofile = student_form.save(commit=False)
+            userprofile.user = user
+            userprofile.save()
+            print('FUCK')
+            return redirect('index')
+    else:
+        user_form = UserCreationForm(prefix='user')
+        student_form = StudentForm(prefix='student')
+    return render(request, 
+                    'register.html', 
+                    dict(userform=user_form,
+                         studentform=student_form))
 
 @login_required
 def index(request):
