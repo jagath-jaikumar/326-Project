@@ -14,16 +14,11 @@ def register(request):
     if request.method == 'POST':
         user_form = UserCreationForm(request.POST, prefix='user')
         student_form = StudentForm(request.POST, request.FILES, prefix='student')
-        print('SHIT')
-        print(user_form.is_valid())
-        print(student_form.is_valid())
-        print(student_form.errors)
         if user_form.is_valid() and student_form.is_valid():
             user = user_form.save()
             userprofile = student_form.save(commit=False)
             userprofile.user = user
             userprofile.save()
-            print('FUCK')
             return redirect('index')
     else:
         user_form = UserCreationForm(prefix='user')
@@ -112,6 +107,39 @@ def myprofile(request):
         'myprofile.html',
         context={'student':student, 'sections':sections}
     )
+
+def class_search(request):
+    if request.method == 'POST':
+        search_term = request.POST['class_search']
+        terms = search_term.split(' ')
+
+        matching_classes = {}
+        str_class_dict = {}
+        for term in terms:
+            cur_match = Section.objects.filter(Q(course__number=term) | \
+                                               Q(course__name__icontains=term) | \
+                                               Q(course__department__name__icontains=term) | \
+                                               Q(course__department__abbreviation__icontains=term)).distinct()
+            cur_match = list(cur_match) 
+            for match in cur_match:
+                match_str = match.__str__
+                if match_str in matching_classes.keys():
+                    matching_classes[match_str] = matching_classes[match_str] + 1
+                else:
+                    matching_classes[match_str] = 1
+                    str_class_dict[match_str] = match
+
+        match_list = sorted(matching_classes.items(), key=lambda x: x[1])
+        match_obj_list = []
+        for pair in match_list:
+            match_obj_list.append(str_class_dict[pair[0]])
+        
+        match_obj_list = list(reversed(match_obj_list))
+
+
+        return render(request, 
+                      'class_search.html',
+                      context={'matching_classes': match_obj_list,})
 
 def friendprofile(request, profile_id):
     student = Student.objects.get(id = profile_id)

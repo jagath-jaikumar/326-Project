@@ -1,12 +1,16 @@
 {% extends "base_generic.html" %}
+{% include "class_search_form.html" %}
+
 
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <div class="col-md-3">
 	<div class="row no-margin">
-		<form class="navbar-search">
-			<input type="text" class="search-query full" placeholder="Add Classes">
+		<form class="navbar-search" action="{% url 'class_search' %}" method="post">
+			{% csrf_token %}
+			<input  name="class_search" type="text" class="search-query full" placeholder="Add Classes">
+			<input type="hidden" name="redirect" value="{% url 'class_search' %}" formmethod="post">
 		</form>
 	</div>
 	<h1>Your Courses</h1>
@@ -61,7 +65,6 @@
 </div>
 
 <div class="col-md-6">
-
 	<div class="form-group border border-dark">
 		<form id="post_form" action="" method="post">
 			{% csrf_token %}
@@ -78,39 +81,22 @@
 						<option>Add some classes before you post!</option>
 						{% endif %}
 					</select>
-					<input type="submit" class="btn btn-primary" id="post_button">Post!</input>
+					<input type="submit" class="btn btn-primary" id="post_button" {% if not section_list %} disabled {% endif %} >Post!</input>
 				</div>
 			</div>
 		</form>
 	</div>
-	{% if posts %}
-	{% for post in posts %}
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">
-				<a href="{% url 'friendprofile' post.poster.pk %}">
-					{{ post.poster.full_name }}
-				</a>
-			</h3>
-		</div>
-		<div class="panel-body">
-			{{ post.content }}
-		</div>
-		<div class="panel-footer">
-			<a href="{% url 'class' post.section.pk %}">
-				{{ post.section.course.department }} {{ post.section.course.number }}
-			</a>
-		</div>
-	</div>
+	{% if matching_classes %}
+	<ul>
+	{% for section in matching_classes %}
+		<div class="class-card">
+	        <a href="{% url 'class' section.id %}" class="card-text">{{ section.course.number }} - {{ section.course.name }}</a>
+	    </div>
 	{% endfor %}
+	</ul>
 	{% endif %}
 </div>
 <div class="col-md-3">
-	<div class="row no-margin">
-		<form class="navbar-search">
-			<input type="text" class="search-query full" placeholder="Search Contacts">
-		</form>
-	</div>
 	<div class="row">
 		<div class="panel-group">
 			<div class="panel panel-default">

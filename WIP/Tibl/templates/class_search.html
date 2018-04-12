@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<form class="navbar-search" action="{% url 'class_search' %}" method="post">
+    {% csrf_token %}
+    <input  name="class_search" type="text" class="search-query full" placeholder="Add Classes">
+    <input type="hidden" name="redirect" value="{% url 'class_search' %}" formmethod="post">
+</form>
+{% if matching_classes %}
+    {% for section in matching_classes %}
+        <div class="class-card">
+            <a href="{% url 'class' section.id %}" class="card-text">{{ section.course.number }} - {{ section.course.name }}</a>
+        </div>
+    {% endfor %}
+{% else %}
+
+{% endif %}
+
+
+{% endblock %}
