@@ -79,31 +79,35 @@ def friendprofile(request, profile_id):
     )
 
 
-def register_section_current(request, section_pk):
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+def register_section_current(request, num_):
     """
     View function for registering for a current class
     """
-    section = Section.objects.get(id=section_pk)
-    student = Student.objects.filter(user__id__exact=request.user.id)
+    course = Course.objects.get(number__exact = num_)
+    section = Section.objects.get(course__id__exact=course.id, year__exact=2018)
+    student = Student.objects.get(user__id__exact=request.user.id)
 
    # Create a form instance and populate it with data from the request (binding):
-    if student not in section.students:
-        section.students.append(student)
+    if student not in section.students.all():
+        section.students.add(student)
         section.save()
 
     return HttpResponseRedirect(reverse('index'))
 
-def register_section_previous(request, section_pk):
+def register_section_previous(request, num_):
     """
     View function for registering for a current class
     """
-    current_section = Section.objects.get(id=section_pk)
-    previous_section = Section.objects.filter(course__id__exact=current_section.course.id, year__exact=2017)
-    student = Student.objects.filter(user__id__exact=request.user.id)
+    course = Course.objects.get(number__exact = num_)
+    previous_section = Section.objects.get(course__id__exact=course.id, year__exact=2017)
+    student = Student.objects.get(user__id__exact=request.user.id)
 
    # Create a form instance and populate it with data from the request (binding):
-    if student not in previous_section.students:
-        previous_section.students.append(student)
+    if student not in previous_section.students.all():
+        previous_section.students.add(student)
         previous_section.save()
 
     return HttpResponseRedirect(reverse('index'))
