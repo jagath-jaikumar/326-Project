@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.template import RequestContext
 from django.forms import ModelForm
 from .models import Course, Section, Post, Student, Teacher, Department, Message, User
-from .forms import StudentForm
+from .forms import StudentForm, AddSearchedClassForm
 
 
 def register(request):
@@ -82,7 +82,13 @@ def classpage(request, num_):
     return render(
         request,
         'classpage.html',
-        context={'students':students_list, 'year':year, 'season':season, 'teachers':teachers_list, 'name':course_name, 'department':course_department, 'number':course_number }
+        context={'students':students_list, 
+                 'year':year, 
+                 'season':season, 
+                 'teachers':teachers_list, 
+                 'name':course_name, 
+                 'department':course_department, 
+                 'number':course_number }
     )
 
 @login_required
@@ -108,38 +114,54 @@ def myprofile(request):
         context={'student':student, 'sections':sections}
     )
 
+@login_required
 def class_search(request):
     if request.method == 'POST':
-        search_term = request.POST['class_search']
-        terms = search_term.split(' ')
+        if 'class_search' in request.POST.keys():
+            print("SHIT")
+            search_term = request.POST['class_search']
+            terms = search_term.split(' ')
 
-        matching_classes = {}
-        str_class_dict = {}
-        for term in terms:
-            cur_match = Section.objects.filter(Q(course__number=term) | \
-                                               Q(course__name__icontains=term) | \
-                                               Q(course__department__name__icontains=term) | \
-                                               Q(course__department__abbreviation__icontains=term)).distinct()
-            cur_match = list(cur_match) 
-            for match in cur_match:
-                match_str = match.__str__
-                if match_str in matching_classes.keys():
-                    matching_classes[match_str] = matching_classes[match_str] + 1
-                else:
-                    matching_classes[match_str] = 1
-                    str_class_dict[match_str] = match
+            matching_classes = {}
+            str_class_dict = {}
+            for term in terms:
+                cur_match = Section.objects.filter(Q(course__number=term) | \
+                                                   Q(course__name__icontains=term) | \
+                                                   Q(course__department__name__icontains=term) | \
+                                                   Q(course__department__abbreviation__icontains=term)).distinct()
 
-        match_list = sorted(matching_classes.items(), key=lambda x: x[1])
-        match_obj_list = []
-        for pair in match_list:
-            match_obj_list.append(str_class_dict[pair[0]])
-        
-        match_obj_list = list(reversed(match_obj_list))
+                cur_match = list(cur_match) 
+                for match in cur_match:
+                    match_str = match.__str__
+                    if match_str in matching_classes.keys():
+                        matching_classes[match_str] = matching_classes[match_str] + 1
+                    else:
+                        matching_classes[match_str] = 1
+                        str_class_dict[match_str] = match
+
+            match_list = sorted(matching_classes.items(), key=lambda x: x[1])
+            match_obj_list = []
+            for pair in match_list:
+                match_obj_list.append(str_class_dict[pair[0]])
+
+            match_obj_list = list(reversed(match_obj_list))
+
+            print([obj.course.name for obj in match_obj_list])
+            added_class_form = AddSearchedClassForm(choices=[(obj.pk ,obj.course.name) for obj in match_obj_list])
+            return render(request, 
+                          'class_search.html',
+                          context={'add_class_form':added_class_form})
+
+        elif 'sections' in request.POST.keys():
+            for section in request.POST['sections']:
+                print(section)
+                print(Section.objects.get(pk=section))
+                Section.objects.get(pk=section).students.add(request.user.student)
+
+    return render(request, 'class_search.html')
 
 
-        return render(request, 
-                      'class_search.html',
-                      context={'matching_classes': match_obj_list,})
+
 
 def friendprofile(request, profile_id):
     student = Student.objects.get(id = profile_id)

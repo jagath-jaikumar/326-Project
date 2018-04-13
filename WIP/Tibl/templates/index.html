@@ -9,7 +9,7 @@
 	<div class="row no-margin">
 		<form class="navbar-search" action="{% url 'class_search' %}" method="post">
 			{% csrf_token %}
-			<input  name="class_search" type="text" class="search-query full" placeholder="Add Classes">
+			<input name="class_search" type="text" class="search-query full" placeholder="Add Classes">
 			<input type="hidden" name="redirect" value="{% url 'class_search' %}" formmethod="post">
 		</form>
 	</div>
