@@ -129,6 +129,7 @@ def class_search(request):
                                                    Q(course__name__icontains=term) | \
                                                    Q(course__department__name__icontains=term) | \
                                                    Q(course__department__abbreviation__icontains=term)).distinct()
+                cur_match = cur_match.filter(~Q(students=request.user.student.pk))
 
                 cur_match = list(cur_match) 
                 for match in cur_match:
@@ -146,7 +147,6 @@ def class_search(request):
 
             match_obj_list = list(reversed(match_obj_list))
 
-            print([obj.course.name for obj in match_obj_list])
             added_class_form = AddSearchedClassForm(choices=[(obj.pk ,obj.course.name) for obj in match_obj_list])
             return render(request, 
                           'class_search.html',
@@ -154,8 +154,6 @@ def class_search(request):
 
         elif 'sections' in request.POST.keys():
             for section in request.POST['sections']:
-                print(section)
-                print(Section.objects.get(pk=section))
                 Section.objects.get(pk=section).students.add(request.user.student)
 
     return render(request, 'class_search.html')
