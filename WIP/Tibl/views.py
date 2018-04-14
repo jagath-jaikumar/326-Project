@@ -117,21 +117,27 @@ def myprofile(request):
 @login_required
 def class_search(request):
     if request.method == 'POST':
+        # If statement to handle the search
         if 'class_search' in request.POST.keys():
-            print("SHIT")
             search_term = request.POST['class_search']
             terms = search_term.split(' ')
 
+            # matching_classes is like {'str_rep_of_class': number_of_hits}
+            # str_class_dict is like {'str_rep_of_class': Section_object}
             matching_classes = {}
             str_class_dict = {}
+
+            # Consider each word in the search separately
             for term in terms:
                 cur_match = Section.objects.filter(Q(course__number=term) | \
                                                    Q(course__name__icontains=term) | \
                                                    Q(course__department__name__icontains=term) | \
                                                    Q(course__department__abbreviation__icontains=term)).distinct()
+
+                # Remove classes the user is in
                 cur_match = cur_match.filter(~Q(students=request.user.student.pk))
 
-                cur_match = list(cur_match) 
+                cur_match = list(cur_match)
                 for match in cur_match:
                     match_str = match.__str__
                     if match_str in matching_classes.keys():
@@ -146,12 +152,12 @@ def class_search(request):
                 match_obj_list.append(str_class_dict[pair[0]])
 
             match_obj_list = list(reversed(match_obj_list))
-
-            added_class_form = AddSearchedClassForm(choices=[(obj.pk ,obj.course.name) for obj in match_obj_list])
+            added_class_form = AddSearchedClassForm(choices=[(obj.pk, obj.to_string()) for obj in match_obj_list])
             return render(request, 
                           'class_search.html',
                           context={'add_class_form':added_class_form})
 
+        # If statement to handle adding classes
         elif 'sections' in request.POST.keys():
             for section in request.POST['sections']:
                 Section.objects.get(pk=section).students.add(request.user.student)

@@ -10,7 +10,7 @@
 <form action="{% url 'class_search' %}" method="post">
     {% csrf_token %}
     {{ add_class_form }}
-    <input type="submit" class="btn btn-primary">Add Classes!</input>
+    <button type="submit" class="btn btn-primary">Add Classes!</button>
 </form>
 {% endif %}
 
