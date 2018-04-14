@@ -15,6 +15,14 @@
         <p>
           <a href="/" class="btn btn-primary">Go to message feed</a>
         </p>
+        <form action="{% url 'register_section_current' number %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-primary" value="Add as Current Class">
+        </form>
+        <form action="{% url 'register_section_previous' number %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-primary" value="Add as Previous Class">
+        </form>
       </div>
     </section>
 
