@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 # Create your models here.
 
@@ -19,6 +20,16 @@ class Section(models.Model):
 	teachers = models.ManyToManyField('Teacher')
 	students = models.ManyToManyField('Student')
 	course = models.ForeignKey('Course', on_delete=models.SET_NULL, null=True)
+
+	def to_string(self):
+		# from .views import classpage
+		return '{0} {1}, {2}, {3} {4}'.format(self.course.department.abbreviation,
+									  		  self.course.number,
+											  self.course.name,
+											  self.season,
+											  self.year)
+
+
 
 class Post(models.Model):
 	poster = models.ForeignKey('Student', on_delete=models.SET_NULL, null=True)
@@ -85,4 +96,5 @@ class Message(models.Model):
 		String for representing the Model object
 		"""
 		return self.content
+
 

@@ -7,23 +7,18 @@ from django.contrib.auth.forms import UserCreationForm
 from django.template import RequestContext
 from django.forms import ModelForm
 from .models import Course, Section, Post, Student, Teacher, Department, Message, User
-from .forms import StudentForm
+from .forms import StudentForm, AddSearchedClassForm
 
 
 def register(request):
     if request.method == 'POST':
         user_form = UserCreationForm(request.POST, prefix='user')
         student_form = StudentForm(request.POST, request.FILES, prefix='student')
-        print('SHIT')
-        print(user_form.is_valid())
-        print(student_form.is_valid())
-        print(student_form.errors)
         if user_form.is_valid() and student_form.is_valid():
             user = user_form.save()
             userprofile = student_form.save(commit=False)
             userprofile.user = user
             userprofile.save()
-            print('FUCK')
             return redirect('index')
     else:
         user_form = UserCreationForm(prefix='user')
@@ -87,7 +82,13 @@ def classpage(request, num_):
     return render(
         request,
         'classpage.html',
-        context={'students':students_list, 'year':year, 'season':season, 'teachers':teachers_list, 'name':course_name, 'department':course_department, 'number':course_number }
+        context={'students':students_list, 
+                 'year':year, 
+                 'season':season, 
+                 'teachers':teachers_list, 
+                 'name':course_name, 
+                 'department':course_department, 
+                 'number':course_number }
     )
 
 @login_required
@@ -112,6 +113,59 @@ def myprofile(request):
         'myprofile.html',
         context={'student':student, 'sections':sections}
     )
+
+@login_required
+def class_search(request):
+    if request.method == 'POST':
+        # If statement to handle the search
+        if 'class_search' in request.POST.keys():
+            search_term = request.POST['class_search']
+            terms = search_term.split(' ')
+
+            # matching_classes is like {'str_rep_of_class': number_of_hits}
+            # str_class_dict is like {'str_rep_of_class': Section_object}
+            matching_classes = {}
+            str_class_dict = {}
+
+            # Consider each word in the search separately
+            for term in terms:
+                cur_match = Section.objects.filter(Q(course__number=term) | \
+                                                   Q(course__name__icontains=term) | \
+                                                   Q(course__department__name__icontains=term) | \
+                                                   Q(course__department__abbreviation__icontains=term)).distinct()
+
+                # Remove classes the user is in
+                cur_match = cur_match.filter(~Q(students=request.user.student.pk))
+
+                cur_match = list(cur_match)
+                for match in cur_match:
+                    match_str = match.__str__
+                    if match_str in matching_classes.keys():
+                        matching_classes[match_str] = matching_classes[match_str] + 1
+                    else:
+                        matching_classes[match_str] = 1
+                        str_class_dict[match_str] = match
+
+            match_list = sorted(matching_classes.items(), key=lambda x: x[1])
+            match_obj_list = []
+            for pair in match_list:
+                match_obj_list.append(str_class_dict[pair[0]])
+
+            match_obj_list = list(reversed(match_obj_list))
+            added_class_form = AddSearchedClassForm(choices=[(obj.pk, obj.to_string()) for obj in match_obj_list])
+            return render(request, 
+                          'class_search.html',
+                          context={'add_class_form':added_class_form})
+
+        # If statement to handle adding classes
+        elif 'sections' in request.POST.keys():
+            for section in request.POST['sections']:
+                Section.objects.get(pk=section).students.add(request.user.student)
+
+    return render(request, 'class_search.html')
+
+
+
 
 def friendprofile(request, profile_id):
     student = Student.objects.get(id = profile_id)
