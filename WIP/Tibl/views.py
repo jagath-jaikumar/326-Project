@@ -3,11 +3,10 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.template import RequestContext
 from django.forms import ModelForm
 from .models import Course, Section, Post, Student, Teacher, Department, Message, User
-from .forms import StudentForm, AddSearchedClassForm
+from .forms import StudentForm, AddSearchedClassForm, UserCreationForm
 
 
 def register(request):
