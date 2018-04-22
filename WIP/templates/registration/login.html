@@ -1,44 +1,80 @@
 {% extends "base_generic.html" %}
-{% load static %}
-
-
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/log.css' %}"> 
+<style>
 
+
+p.statement {
+color: red;
+padding-left: 10px; 
+}
+
+div.login-btn {
+   position: absolute;
+    right: 650px;
+    width: 300px;
+    padding: 10px;
+}
+
+div.form {
+padding:10px;
+
+
+}
+
+td form.password {
+  padding-left: 300px;  
+}
+
+p.link {
+  padding-left: 10px;
+  font-size: 12px; 
+}
+
+div.remember-box {
+  padding-left: 10px; 
+  padding-bottom: 20px; 
+  padding-top: 10px;
+}
+
+</style>
+<div class= "center">
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+
+<p class = "statement">Your name and password didn't match. Please try again.</p>
 {% endif %}
 
 {% if next %}
     {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
+    <p class = "statement">Your account doesn't have access to this page. To proceed,
     please login with an account that has access.</p>
     {% else %}
-    <p>Please login to see this page.</p>
+    <p class = "statement">Please login to see this page.</p>
     {% endif %}
 {% endif %}
-<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
 
-<div>
+<div class = "form">
   <td>{{ form.username.label_tag }}</td>
-  <td>{{ form.username }}</td>
+  <td style="border-radius: 20px;">{{ form.username }}</td>
 </div>
-<div>
+<div class= "form">
   <td>{{ form.password.label_tag }}</td>
   <td>{{ form.password }}</td>
 </div>
 
-<div>
+<div class = "login-btn">
   <input class="btn btn-info" type="submit" value="login" />
   <input type="hidden" name="next" value="{{ next }}" />
 </div>
+<div class="remember-box"><div class="checkbox"><label class="ng-binding"><input ng-model="form.remember" type="checkbox" name="remember" id="login-remember" class="ng-pristine ng-untouched ng-valid ng-not-empty"> Remember me <span class="control-indicator"></span></label></div></div>
+
 </form>
 
 {# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-
-<p><a href="{% url 'register' %}">New user? Register here!</a></p>
-
+<p class = "link"><a href="{% url 'register' %}">New user? Click here!</a></p>
 
 {% endblock %}
