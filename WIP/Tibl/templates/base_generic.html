@@ -19,7 +19,6 @@
     <div class="container d-flex justify-content-between">
       <a href="/" class="navbar-brand">Home</a>
       <a href="{% url 'myprofile'%}" class="navbar-brand">Your Profile</a>
-      <a href="{% url 'messages'%}" class="navbar-brand">Messages</a>
       {% if user.is_authenticated %}
       <a href="#" class="navbar-brand">User: {{ user.get_username }}</a>
      <a href="{% url 'logout'%}?next={{request.path}}" class="navbar-brand">Logout</a>

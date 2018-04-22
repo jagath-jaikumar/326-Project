@@ -114,31 +114,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<p class="panel-title">
-						<a data-toggle="collapse" href="#recent_contacts_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample">Recently Contacted</a>
-					</p>
-				</div>
-				{% if have_messaged %}
-				<div id="recent_contacts_dropdown" class="collapse in">
-					<ul class="list-group">
-						{% for message in have_messaged %}
-						<a href="{% url 'messages' %}">
-							<li class="list-group-item">
-								{{ message.full_name }}
-							</li>
-						</a>
-						{% endfor %}
-					</ul>
-				</div>
-				{% endif %}
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="panel-group">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<p class="panel-title">
-						<a data-toggle="collapse" href="#classmates_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample">Other Classmates</a>
+						<a data-toggle="collapse" href="#classmates_dropdown" role="button" aria-expanded="true" aria-controls="collapseExample">Classmates</a>
 					</p>
 				</div>
 				{% if other_classmates %}
