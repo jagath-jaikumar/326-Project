@@ -195,18 +195,3 @@ def register_section_current(request, num_):
         section.save()
 
     return HttpResponseRedirect(reverse('index'))
-
-def register_section_previous(request, num_):
-    """
-    View function for registering for a current class
-    """
-    course = Course.objects.get(number__exact = num_)
-    previous_section = Section.objects.get(course__id__exact=course.id, year__exact=2017)
-    student = Student.objects.get(user__id__exact=request.user.id)
-
-   # Create a form instance and populate it with data from the request (binding):
-    if student not in previous_section.students.all():
-        previous_section.students.add(student)
-        previous_section.save()
-
-    return HttpResponseRedirect(reverse('index'))
