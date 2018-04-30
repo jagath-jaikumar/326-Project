@@ -12,15 +12,7 @@
         {% for teacher in teachers %}
         <p>Instructor: <a href="#">{{ teacher.full_name }}</a></p> 
         {% endfor %}
-        <div class="col-md-6">
-          <div class="form-group border border-dark">
-            <form action="{% url 'register_section_previous' number %}" method="POST">
-              {% csrf_token %}
-              <input type="submit" class="btn btn-info" value="Add as Previous Class">
-            </form>
-          </div>
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="form-group border border-dark">
         <form action="{% url 'register_section_current' number %}" method="POST">
           {% csrf_token %}
